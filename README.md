@@ -1,38 +1,36 @@
-echo "export LC_ALL=en_US.UTF-8"  >>  /etc/profile
-source /etc/profile
+CentOS 8手动安装Xray
 
-# 安装更新
-sudo yum check-update
-sudo yum update
+#echo "export LC_ALL=en_US.UTF-8"  >>  /etc/profile
+#source /etc/profile
+
+安装更新
+#sudo yum check-update
+#sudo yum update
 sudo reboot
 
-# 安装新内核
-rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
-yum install https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm
-yum --enablerepo=elrepo-kernel install kernel-ml
+安装新内核
+#rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+#yum install https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm
+#yum --enablerepo=elrepo-kernel install kernel-ml
 
-yum install epel-release -y
-yum install -y curl tar socat wget
-yum install -y nginx
-systemctl start nginx
+#yum install -y curl tar socat wget epel-release 
+#yum install -y nginx
+#systemctl start nginx
 
-# 关闭防火墙
-firewall-cmd --state
-firewall-cmd --zone=public --add-port=80/tcp --permanent
-firewall-cmd --zone=public --add-port=443/tcp --permanent
-firewall-cmd --reload
+（可选）开启防火墙80，443端口
+#firewall-cmd --state                   # 查看防火墙状态
+#firewall-cmd --zone=public --add-port=80/tcp --permanent
+#firewall-cmd --zone=public --add-port=443/tcp --permanent
+或
+#systemctl stop firewalld.service       # 停止防火墙
+#systemctl disable firewalld.service    # 禁止防火墙开机自启
+#firewall-cmd --reload
+#reboot
 
+#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
+#xray uuid
 
-firewall-cmd --state                   # 查看防火墙状态
-systemctl stop firewalld.service       # 停止防火墙
-systemctl disable firewalld.service    # 禁止防火墙开机自启
-reboot
-
-systemctl start nginx
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
-xray uuid
-
-systemctl stop nginx
+#systemctl stop nginx
 
 # 安装acme.sh
 curl  https://get.acme.sh | sh -s email=wans10@hotmail.com
