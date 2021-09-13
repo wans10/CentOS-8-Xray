@@ -80,7 +80,7 @@ systemctl restart xray
 systemctl status xray
 ```
 
-## 9. 安装GOOGLE BBR
+## 9. 安装G BBR
 ```
 echo 'net.core.default_qdisc=fq' | sudo tee -a /etc/sysctl.conf
 echo 'net.ipv4.tcp_congestion_control=bbr' | sudo tee -a /etc/sysctl.conf
