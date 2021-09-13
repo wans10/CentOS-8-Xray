@@ -69,7 +69,7 @@ reboot
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
 xray uuid     # UUID
 ```
-### 7.2 路径：usr/local/etc/config.jason VLESS over TCP with XTLS + 回落 & 分流 to WHATEVER（终极配置）
+### 7.2 VLESS over TCP with XTLS + 回落 & 分流 to WHATEVER（终极配置）（路径：usr/local/etc/config.jason）
 
 ## 8. 安装acme.sh
 ```
