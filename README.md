@@ -1,8 +1,8 @@
-CentOS 8手动安装Xray
-
-#echo "export LC_ALL=en_US.UTF-8"  >>  /etc/profile
-#source /etc/profile
-
+###CentOS 8手动安装Xray
+、、、
+echo "export LC_ALL=en_US.UTF-8"  >>  /etc/profile
+source /etc/profile
+、、、
 安装更新
 #sudo yum check-update
 #sudo yum update
