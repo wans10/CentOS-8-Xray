@@ -40,6 +40,7 @@ yum --enablerepo=elrepo-kernel install kernel-ml
 ```
 yum install -y curl tar socat wget epel-release 
 ```
+
 ## 5. 安装并启动Nginx
 ```
 yum install -y nginx
