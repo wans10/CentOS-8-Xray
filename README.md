@@ -1,4 +1,5 @@
 # CentOS手动安装Xray
+## 此方法只适用于CentOS 8.0系统
 
 ## 1. 准备工作
 ### 1.1 设置root密码（适用于谷歌云，腾讯云等不提供root密码的VPS）
@@ -80,12 +81,22 @@ systemctl restart xray
 systemctl status xray
 ```
 
-## 9. 安装G BBR
+## 9. 安装Google BBR
+### 为了启用BBR算法，需要修改sysctl配置：
 ```
 echo 'net.core.default_qdisc=fq' | sudo tee -a /etc/sysctl.conf
 echo 'net.ipv4.tcp_congestion_control=bbr' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
+```
+### 使用以下命令确认 BBR 已启用：
+```
 sudo sysctl net.ipv4.tcp_available_congestion_control
+```
+### 验证：
+```
 sudo sysctl -n net.ipv4.tcp_congestion_control
+```
+### 检查内核模块是否已加载：
+```
 lsmod | grep bbr
 ```
