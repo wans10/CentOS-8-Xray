@@ -78,13 +78,24 @@ add-apt-repository ppa:ondrej/php
 同样地，更新一下 APT 缓存
 
 ```bash
-apt update
+sudo apt update
+```
+
+安装PHP8.2
+
+```bash
+sudo apt install php8.2 -y
+```
+
+检查PHP版本
+```bash
+php --version
 ```
 
 然后安装所需的 PHP 模组
 
 ```bash
-apt install php8.3-{bcmath,bz2,cli,common,curl,fpm,gd,igbinary,mbstring,mysql,opcache,readline,redis,xml,yaml,zip}
+sudo apt install php8.2-bcmath php8.2-bz2 php8.2-cli php8.2-common php8.2-curl php8.2-fpm php8.2-gd php8.2-igbinary php8.2-mbstring php8.2-mysql php8.2-opcache php8.2-readline php8.2-redis php8.2-xml php8.2-yaml php8.2-zip
 ```
 
 启动 php-fpm 服务并设置开机启动
