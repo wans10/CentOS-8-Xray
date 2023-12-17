@@ -1,5 +1,17 @@
 ?> 教程使用的环境：Ubuntu 22.04/x86_64 架构
 
+## 在执行任何其他操作之前检查更新并安装它们
+
+```bash
+sudo apt update && sudo apt -y upgrade
+```
+
+升级后清理 APT 缓存。
+
+```bash
+sudo apt autoremove
+```
+
 ## 禁用 UFW
 
 首先要禁用 ufw 防火墙
