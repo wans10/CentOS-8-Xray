@@ -101,8 +101,8 @@ sudo apt install php8.2-bcmath php8.2-bz2 php8.2-cli php8.2-common php8.2-curl p
 启动 php-fpm 服务并设置开机启动
 
 ```bash
-systemctl start php8.3-fpm
-systemctl enable php8.3-fpm
+systemctl start php8.2-fpm
+systemctl enable php8.2-fpm
 ```
 
 ## 安装 MariaDB
