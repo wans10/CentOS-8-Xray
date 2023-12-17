@@ -250,6 +250,16 @@ systemctl restart nginx
 
 虚拟主机设置完成后，前往你所设置的网站根目录文件夹，执行以下命令：
 
+创建网站根目录文件夹
+
+```bash
+mkdir -p /data/wwwroot/redapricot.xyz
+```
+
+```bash
+cd /data/wwwroot/redapricot.xyz
+```
+
 ```bash
 apt install git
 git clone -b 2023.6 https://github.com/Anankke/SSPanel-Uim.git .
