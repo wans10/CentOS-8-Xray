@@ -114,6 +114,11 @@ apt install apt-transport-https curl
 mkdir -p /etc/apt/keyrings
 curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp'
 ```
+创建`/etc/apt/sources.list.d/mariadb.sources` 文件
+
+```bash
+sudo nano /etc/apt/sources.list.d/mariadb.sources
+```
 
 编辑 `/etc/apt/sources.list.d/mariadb.sources` 文件，将以下配置写入其中
 
