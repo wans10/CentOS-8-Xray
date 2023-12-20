@@ -27,7 +27,7 @@ Nginx 的安装我们使用 Nginx 官方 DEB 源
 安装必要的软件
 
 ```bash
-sudo apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring
+sudo apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring gpg
 ```
 
 添加 Nginx 官方 PGP Key
