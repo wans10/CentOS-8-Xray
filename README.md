@@ -27,7 +27,7 @@ Nginx 的安装我们使用 Nginx 官方 DEB 源
 安装必要的软件
 
 ```bash
-apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring
+sudo apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring
 ```
 
 添加 Nginx 官方 PGP Key
@@ -51,13 +51,13 @@ echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 
 然后更新一下 APT 缓存
 
 ```bash
-apt update
+sudo apt update
 ```
 
 安装 Nginx
 
 ```bash
-apt install nginx
+sudo apt install nginx
 ```
 
 最后把 Nginx 服务启动并设置开机启动
