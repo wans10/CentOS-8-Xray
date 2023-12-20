@@ -110,7 +110,7 @@ systemctl enable php8.2-fpm
 MariaDB 官方提供了一个完善的 DEB 源，跟 Nginx 源一样，我们需要安装必要的软件包和导入 GPG Key
 
 ```bash
-apt install apt-transport-https curl
+sudo apt install apt-transport-https curl
 mkdir -p /etc/apt/keyrings
 curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp'
 ```
@@ -135,13 +135,13 @@ Signed-By: /etc/apt/keyrings/mariadb-keyring.pgp
 更新一下 APT 缓存
 
 ```bash
-apt update
+sudo apt update
 ```
 
 安装 MariaDB 11.2
 
 ```bash
-apt install mariadb-server
+sudo apt install mariadb-server
 ```
 
 启动 MariaDB 服务并设置开机启动
@@ -176,13 +176,13 @@ echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://pack
 更新一下 APT 缓存
 
 ```bash
-apt update
+sudo apt update
 ```
 
 安装 redis-server
 
 ```bash
-apt install redis
+sudo apt install redis
 ```
 
 启动 redis-server 服务并设置开机启动
