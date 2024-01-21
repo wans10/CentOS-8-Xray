@@ -350,13 +350,16 @@ php xcat Update
 
 ```bash
 sed -i 's@^disable_functions.*@disable_functions = passthru,exec,system,chroot,chgrp,chown,shell_exec,proc_open,proc_get_status,ini_alter,ini_restore,dl,readlink,symlink,popepassthru,stream_socket_server,fsocket,popen@' /etc/php/8.2/fpm/php.ini
+```
+
+```bash
 sed -i 's@^disable_functions.*@disable_functions = passthru,exec,system,chroot,chgrp,chown,shell_exec,proc_open,proc_get_status,ini_alter,ini_restore,dl,readlink,symlink,popepassthru,stream_socket_server,fsocket,popen@' /etc/php/8.2/cli/php.ini
 ```
 
 修改后需要重启一下 PHP-FPM 服务
 
 ```bash
-systemctl restart php8.3-fpm
+systemctl restart php8.2-fpm
 ```
 
 启用 OPcache 与 JIT
