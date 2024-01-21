@@ -1,4 +1,30 @@
-教程使用的环境：Ubuntu 22.04/x86_64 架构
+?> 教程使用的环境：Ubuntu 22.04/x86_64 架构
+
+## 安装Google BBR
+
+```bash
+echo 'net.core.default_qdisc=fq' | sudo tee -a /etc/sysctl.conf
+echo 'net.ipv4.tcp_congestion_control=bbr' | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+```
+
+使用以下命令确认 BBR 已启用：
+
+```bash
+sudo sysctl net.ipv4.tcp_available_congestion_control
+```
+
+验证：
+
+```bash
+sudo sysctl -n net.ipv4.tcp_congestion_control
+```
+
+检查内核模块是否已加载：
+
+```bash
+lsmod | grep bbr
+```
 
 ## 在执行任何其他操作之前检查更新并安装
 
@@ -10,6 +36,12 @@ sudo apt update && sudo apt upgrade -y
 
 ```bash
 sudo apt autoremove
+```
+
+## 创建网站根目录文件夹
+
+```bash
+mkdir -p /home/wwwroot/sspanel
 ```
 
 ## 禁用 UFW
@@ -27,7 +59,7 @@ Nginx 的安装我们使用 Nginx 官方 DEB 源
 安装必要的软件
 
 ```bash
-sudo apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring gpg
+apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring
 ```
 
 添加 Nginx 官方 PGP Key
@@ -51,13 +83,13 @@ echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 
 然后更新一下 APT 缓存
 
 ```bash
-sudo apt update
+apt update
 ```
 
 安装 Nginx
 
 ```bash
-sudo apt install nginx
+apt install nginx
 ```
 
 最后把 Nginx 服务启动并设置开机启动
@@ -78,24 +110,13 @@ add-apt-repository ppa:ondrej/php
 同样地，更新一下 APT 缓存
 
 ```bash
-sudo apt update
-```
-
-安装PHP8.2
-
-```bash
-sudo apt install php8.2 -y
-```
-
-检查PHP版本
-```bash
-php --version
+apt update
 ```
 
 然后安装所需的 PHP 模组
 
 ```bash
-sudo apt install php8.2-bcmath php8.2-bz2 php8.2-cli php8.2-common php8.2-curl php8.2-fpm php8.2-gd php8.2-igbinary php8.2-mbstring php8.2-mysql php8.2-opcache php8.2-readline php8.2-redis php8.2-xml php8.2-yaml php8.2-zip
+apt install php8.2-{bcmath,bz2,cli,common,curl,fpm,gd,igbinary,mbstring,mysql,opcache,readline,redis,xml,yaml,zip}
 ```
 
 启动 php-fpm 服务并设置开机启动
@@ -110,10 +131,11 @@ systemctl enable php8.2-fpm
 MariaDB 官方提供了一个完善的 DEB 源，跟 Nginx 源一样，我们需要安装必要的软件包和导入 GPG Key
 
 ```bash
-sudo apt install apt-transport-https curl
+apt install apt-transport-https curl
 mkdir -p /etc/apt/keyrings
 curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp'
 ```
+
 创建`/etc/apt/sources.list.d/mariadb.sources` 文件
 
 ```bash
@@ -135,13 +157,13 @@ Signed-By: /etc/apt/keyrings/mariadb-keyring.pgp
 更新一下 APT 缓存
 
 ```bash
-sudo apt update
+apt update
 ```
 
 安装 MariaDB 11.2
 
 ```bash
-sudo apt install mariadb-server
+apt install mariadb-server
 ```
 
 启动 MariaDB 服务并设置开机启动
@@ -176,13 +198,13 @@ echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://pack
 更新一下 APT 缓存
 
 ```bash
-sudo apt update
+apt update
 ```
 
 安装 redis-server
 
 ```bash
-sudo apt install redis
+apt install redis
 ```
 
 启动 redis-server 服务并设置开机启动
@@ -221,7 +243,7 @@ server {
         listen 80;
         listen [::]:80;
 
-        root /path/to/your/site/public; #你的站点文件路径 + /public
+        root /home/wwwroot/sspanel/public; #你的站点文件路径 + /public
         index index.php;
         server_name 你设置的网站域名;
 
@@ -250,14 +272,8 @@ systemctl restart nginx
 
 虚拟主机设置完成后，前往你所设置的网站根目录文件夹，执行以下命令：
 
-创建网站根目录文件夹
-
 ```bash
-mkdir -p /data/wwwroot/redapricot.xyz
-```
-
-```bash
-cd /data/wwwroot/redapricot.xyz
+cd /home/wwwroot/sspanel
 ```
 
 ```bash
@@ -311,7 +327,7 @@ nano config/.config.php
 
 ```bash
 php xcat Migration new
-php xcat Tool importAllSettings
+php xcat Tool importSetting
 php xcat Tool createAdmin
 sudo -u www-data /usr/bin/php xcat ClientDownload
 ```
@@ -325,7 +341,7 @@ php xcat Update
 使用 `crontab -e` 指令设置 SSPanel 的基本 cron 任务：
 
 ```bash
-*/5 * * * * /usr/bin/php /path/to/your/site/xcat Cron
+*/5 * * * * /usr/bin/php /home/wwwroot/sspanel/xcat Cron
 ```
 
 ## 提高系统安全性与性能
@@ -333,8 +349,8 @@ php xcat Update
 禁用一些危险的 PHP Function
 
 ```bash
-sed -i 's@^disable_functions.*@disable_functions = passthru,exec,system,chroot,chgrp,chown,shell_exec,proc_open,proc_get_status,ini_alter,ini_restore,dl,readlink,symlink,popepassthru,stream_socket_server,fsocket,popen@' /etc/php/8.3/fpm/php.ini
-sed -i 's@^disable_functions.*@disable_functions = passthru,exec,system,chroot,chgrp,chown,shell_exec,proc_open,proc_get_status,ini_alter,ini_restore,dl,readlink,symlink,popepassthru,stream_socket_server,fsocket,popen@' /etc/php/8.3/cli/php.ini
+sed -i 's@^disable_functions.*@disable_functions = passthru,exec,system,chroot,chgrp,chown,shell_exec,proc_open,proc_get_status,ini_alter,ini_restore,dl,readlink,symlink,popepassthru,stream_socket_server,fsocket,popen@' /etc/php/8.2/fpm/php.ini
+sed -i 's@^disable_functions.*@disable_functions = passthru,exec,system,chroot,chgrp,chown,shell_exec,proc_open,proc_get_status,ini_alter,ini_restore,dl,readlink,symlink,popepassthru,stream_socket_server,fsocket,popen@' /etc/php/8.2/cli/php.ini
 ```
 
 修改后需要重启一下 PHP-FPM 服务
@@ -345,7 +361,7 @@ systemctl restart php8.3-fpm
 
 启用 OPcache 与 JIT
 
-在 `/etc/php/8.3/fpm/conf.d/10-opcache.ini` 中添加如下配置
+在 `/etc/php/8.2/fpm/conf.d/10-opcache.ini` 中添加如下配置
 
 ```
 zend_extension=opcache.so
@@ -363,5 +379,5 @@ opcache.validate_root=on
 修改后同样需要重启一下 PHP-FPM 服务
 
 ```bash
-systemctl restart php8.3-fpm
+systemctl restart php8.2-fpm
 ```
