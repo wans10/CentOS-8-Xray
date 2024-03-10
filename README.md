@@ -41,7 +41,7 @@ sudo apt autoremove
 ## 创建网站根目录文件夹
 
 ```bash
-mkdir -p /home/wwwroot/sspanel
+mkdir -p /var/www/sspanel
 ```
 
 ## 禁用 UFW
